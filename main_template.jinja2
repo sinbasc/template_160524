@@ -1,13 +1,16 @@
 # main_template.jinja2
 from fastapi import FastAPI
-from app.api import endpoint_logic_1, endpoint_logic_2, ...
-from app.db import model_1, model_2, ...
+{% for endpoint in endpoints %}
+from app.api import {{ endpoint }}
+{% endfor %}
 
 app = FastAPI()
 
-app.include_router(endpoint_logic_1.router)
-app.include_router(endpoint_logic_2.router)
-...
+{% for endpoint in endpoints %}
+app.include_router({{ endpoint }}.router)
+{% endfor %}
 
-# Database models
-Base.metadata.create_all(bind=engine)  # Assuming `engine` is defined elsewhere
+{% for table in tables %}
+# Database models for {{ table }}
+{{ table }}.Base.metadata.create_all(bind=engine)
+{% endfor %}
