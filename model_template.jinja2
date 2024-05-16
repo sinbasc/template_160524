@@ -1,0 +1,11 @@
+# model_template.jinja2
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
+class {{ table_name | title }}(Base):
+    __tablename__ = '{{ table_name }}'
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
